@@ -32,6 +32,10 @@ class Hill:
         if self.block_size == 0:
             return False
 
+        for i in keyword:
+            if i not in self.symbols:
+                return False
+                
         self.key = Matrix.Matrix(self.block_size, self.block_size)
         for i in range(self.block_size):
             for j in range(self.block_size):

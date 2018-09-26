@@ -1,4 +1,5 @@
 import tkinter
+from tkinter import messagebox
 import Hill
 
 class Window(tkinter.Frame):
@@ -10,7 +11,15 @@ class Window(tkinter.Frame):
 
     def btnKeyClicked(self):
         keyword = self.entryKey.get()
-        self.cipher.setKeyword(keyword)
+        result = self.cipher.setKeyword(keyword)
+        if result == True:
+            self.buttonEncrypt["state"] = "active"
+            self.buttonDecrypt["state"] = "active"
+        else:
+            tkinter.messagebox.showerror(title="Ошибка при задании ключа", message="Ключ не соответсвует требованиям.\n" +
+            "1. Длина ключевого слова должна быть равна квадрату целого числа\n2. Все символы ключевого слова должны присутствовать в алфавите\n" + 
+            "Алфавит: abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&'()*+,-./:;<=>?@[\]^_`АаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯя")
+
     
     def btnEncryptClicked(self):
         plain_text = self.entryIn.get()
@@ -39,8 +48,8 @@ class Window(tkinter.Frame):
         self.textIn.grid(column=1, row=3)
         self.entryIn = tkinter.Entry()
         self.entryIn.grid(column=1, row=4)
-        self.buttonEncrypt = tkinter.Button(text="Зашифровать", command=self.btnEncryptClicked)
-        self.buttonDecrypt = tkinter.Button(text="Расшифровать", command=self.btnDecryptClicked)
+        self.buttonEncrypt = tkinter.Button(text="Зашифровать", command=self.btnEncryptClicked, state='disabled')
+        self.buttonDecrypt = tkinter.Button(text="Расшифровать", command=self.btnDecryptClicked, state='disabled')
         self.buttonDecrypt.grid(column=1, row=5)
         self.buttonEncrypt.grid(column=2, row=5)
         self.textOut = tkinter.Label(text="Выходной текст")
